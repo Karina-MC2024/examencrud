@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+   
+</head>
+<body>
+    <div style="text-align: center;">
+        <h2>SEGUNDO PARCIAL TEM-742</h2>
+        <p>Nombre: KARINA MAMANI CONDORI</p>
+        <p>Carnet: 13211696 </p>
+        <h1>Gestión de Productos</h1>
+    </div>
+    <a href="{{ url_for('nuevo') }}">Nuevo Producto</a>
+    <br>
+    <table border="1" style="margin: 0 auto;">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Fecha de Vencimiento</th>
+            <th>Categoría</th>
+            <th>Acciones</th>
+        </tr>
+        {% for prod in productos %}
+        <tr>
+            <td>{{ prod.id }}</td>
+            <td>{{ prod.nombre }}</td>
+            <td>{{ prod.cantidad }}</td>
+            <td>{{ prod.precio }}</td>
+            <td>{{ prod.fecha_vencimiento }}</td>
+            <td>{{ prod.categoria }}</td>
+            <td>
+                <a href="{{ url_for('editar', id=prod.id) }}">Editar</a>
+                <form action="{{ url_for('eliminar', id=prod.id) }}" method="post" style="display:inline;">
+                    <input type="submit" value="Eliminar">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

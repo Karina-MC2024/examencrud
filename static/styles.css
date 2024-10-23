@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2, p {
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #3c8dbc;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #270a0a;
+            text-align: center;
+        }
+        th {
+            background-color: #423c4dec;
+            color: #fcf5f5;
+        }
+        a, input[type="submit"], button {
+            padding: 8px 12px;
+            background-color: #e0429ed5;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover, a:hover, button:hover {
+            background-color: #337ab7;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+        form input, form select {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #11097a;
+            border-radius: 4px;
+        }
+        .nuevo-producto {
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-title {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+            color: #ac298f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>SEGUNDO PARCIAL TEM-742</h2>
+        <p>Nombre: KARINA MAMANI CONDORI</p>
+        <p>Carnet: 13211696</p>
+        <h1>Gestión de Productos</h1>
+
+        <a href="{{ url_for('nuevo') }}" class="nuevo-producto">Nuevo Producto</a>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Fecha de Vencimiento</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+            </tr>
+            {% for item in productos %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.nombre }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td>{{ item.precio }}</td>
+                <td>{{ item.fecha_vencimiento }}</td>
+                <td>{{ item.categoria }}</td>
+                <td>
+                    <a href="{{ url_for('editar', id=item.id) }}">Editar</a>
+                    <form action="{{ url_for('eliminar', id=item.id) }}" method="post" style="display:inline;">
+                        <input type="submit" value="Eliminar">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="form-group">
+            <h2 class="form-title">Agregar Nuevo Producto</h2>
+            <form action="{{ url_for('crear') }}" method="post">
+                <input type="text" name="nombre" placeholder="Nombre del Producto" required>
+                <input type="number" name="cantidad" placeholder="Cantidad" required min="1">
+                <input type="number" name="precio" placeholder="Precio" required step="0.01">
+                <input type="date" name="fecha_vencimiento" required>
+                <input type="text" name="categoria" placeholder="Categoría" required>
+                <input type="submit" value="Agregar Producto">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
